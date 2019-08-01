@@ -9,4 +9,5 @@
 
 奈何能力有限，全文检索轮子我是没有造出来，只能调用FileLocator去解决，有兴趣的大佬可以看看怎么实现。
 
+![Image text](https://github.com/sswest/STARMakert/blob/master/example.jpg)
 自行编译
