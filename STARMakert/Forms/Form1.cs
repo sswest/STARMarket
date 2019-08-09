@@ -2,17 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Schema;
 using Microsoft.Win32;
 using STARMakert.Classes;
 using STARMakert.Core;
@@ -38,6 +33,7 @@ namespace STARMakert
         private static int capacity = 10;
         private static Queue downloadQueue = new Queue(capacity);
         private static bool stopDownload = false;
+        public static bool localData = false;
 
         public Form1()
         {
@@ -54,7 +50,7 @@ namespace STARMakert
                 localBasePath = software.GetValue("localBasePath").ToString();
                 fileLocatorPath = software.GetValue("fileLocatorPath").ToString();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 //读取注册表错误时直接使用当前目录配置
                 localBasePath = Directory.GetCurrentDirectory() + "\\信息披露";
@@ -145,7 +141,20 @@ namespace STARMakert
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.ToString());
+                if (exception.Message=="0")
+                {
+                    DialogResult dialog = MessageBox.Show("在线获取数据失败\n是否加载本地文件数据?", "错误", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                    if (dialog == DialogResult.OK)
+                    {
+                        e.Result = "加载本地数据";
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(exception.ToString());
+                }
+                
             }
             //异步获取并初始化数据
             toolStripStatusLabel1.Text = "初始化数据";
@@ -300,6 +309,9 @@ namespace STARMakert
             {
                 toolStripStatusLabel1.Text = "";
                 button2.Text = "缓存列表文件";
+            } else if (res == "加载本地数据")
+            {
+                加载本地数据ToolStripMenuItem_Click(new object(), new EventArgs());
             }
             else
             {
@@ -340,27 +352,30 @@ namespace STARMakert
             }
             else
             {
-                // 选择单个公司 调出属性栏
                 Data data = (Data)comboBox1.SelectedItem;
                 selectCompany.Add(data);
-                label_detals.Text = "公司简称：" + data.stockIssuer[0].s_issueCompanyAbbrName + "\n";
-                label_detals.Text += "所属行业：" + data.stockIssuer[0].s_csrcCodeDesc + "\n";
-                var statu = statuDictionary.FirstOrDefault(q => q.Value == data.currStatus).Key;
-                label_detals.Text += "申报状态：" + statu + "\n";
-                string temp = "";
-                foreach (var itmd in data.intermediary)
+                // 选择单个公司 调出属性栏
+                if (!localData)
                 {
-                    if (intermediaryTypes.ContainsKey(itmd.i_intermediaryType))
+                    label_detals.Text = "公司简称：" + data.stockIssuer[0].s_issueCompanyAbbrName + "\n";
+                    label_detals.Text += "所属行业：" + data.stockIssuer[0].s_csrcCodeDesc + "\n";
+                    var statu = statuDictionary.FirstOrDefault(q => q.Value == data.currStatus).Key;
+                    label_detals.Text += "申报状态：" + statu + "\n";
+                    string temp = "";
+                    foreach (var itmd in data.intermediary)
                     {
-                        temp += intermediaryTypes[itmd.i_intermediaryType] + "：" + itmd.i_intermediaryAbbrName + "\n";
+                        if (intermediaryTypes.ContainsKey(itmd.i_intermediaryType))
+                        {
+                            temp += intermediaryTypes[itmd.i_intermediaryType] + "：" + itmd.i_intermediaryAbbrName + "\n";
+                        }
                     }
+                    label_detals.Text += temp;
+                    label_detals.Text += "更新日期：" + DateFormat(data.updateDate) + "\n";
+                    label_detals.Text += "受理日期：" + DateFormat(data.createTime);
+                    linkLabel1.Visible = true;
+                    linkLabel1.Links.Clear();
+                    linkLabel1.Links.Add(0, 4, @"http://kcb.sse.com.cn/renewal/xmxq/index.shtml?auditId=" + data.stockAuditNum);
                 }
-                label_detals.Text += temp;
-                label_detals.Text += "更新日期：" + DateFormat(data.updateDate) + "\n";
-                label_detals.Text += "受理日期：" + DateFormat(data.createTime);
-                linkLabel1.Visible = true;
-                linkLabel1.Links.Clear();
-                linkLabel1.Links.Add(0,4, @"http://kcb.sse.com.cn/renewal/xmxq/index.shtml?auditId=" + data.stockAuditNum);
             }
 
             //刷新列表框
@@ -442,6 +457,33 @@ namespace STARMakert
             else
             {
                 toolStripStatusLabel1.Text += " 网络位置";
+            }
+
+            if (comboBox1.SelectedIndex==0)
+            {
+                if (!localData)
+                {
+                    Data data = targetResult.CompanyData;
+                    label_detals.Text = "公司简称：" + data.stockIssuer[0].s_issueCompanyAbbrName + "\n";
+                    label_detals.Text += "所属行业：" + data.stockIssuer[0].s_csrcCodeDesc + "\n";
+                    var statu = statuDictionary.FirstOrDefault(q => q.Value == data.currStatus).Key;
+                    label_detals.Text += "申报状态：" + statu + "\n";
+                    string temp = "";
+                    foreach (var itmd in data.intermediary)
+                    {
+                        if (intermediaryTypes.ContainsKey(itmd.i_intermediaryType))
+                        {
+                            temp += intermediaryTypes[itmd.i_intermediaryType] + "：" + itmd.i_intermediaryAbbrName + "\n";
+                        }
+                    }
+                    label_detals.Text += temp;
+                    label_detals.Text += "更新日期：" + DateFormat(data.updateDate) + "\n";
+                    label_detals.Text += "受理日期：" + DateFormat(data.createTime);
+                    linkLabel1.Visible = true;
+                    linkLabel1.Links.Clear();
+                    linkLabel1.Links.Add(0, 4, @"http://kcb.sse.com.cn/renewal/xmxq/index.shtml?auditId=" + data.stockAuditNum);
+                }
+
             }
         }
         private void ListBox1_KeyDown(object sender, KeyEventArgs e)
@@ -562,6 +604,76 @@ namespace STARMakert
 
             System.Diagnostics.Process.Start(path,args);
 
+        }
+
+        private void 加载本地数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!localData)
+            {
+                //第二次就没必要提示了
+                DialogResult dialog = MessageBox.Show("使用本地数据部分功能将无法使用\n建议只有在无法从互联网取得数据时才启用\n确定要加载本地缓存数据?\n", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk,
+                    MessageBoxDefaultButton.Button2);
+                if (dialog == DialogResult.Cancel) return;
+            }
+            filterDictionary["hangye"] = false;
+            filterDictionary["baojian"] = false;
+            filterDictionary["shenji"] = false;
+            filterDictionary["lvshi"] = false;
+            DirectoryInfo directoryInfo = new DirectoryInfo(localBasePath);
+            DirectoryInfo[] subinfos = directoryInfo.GetDirectories();
+            List<Result> results = new List<Result>();
+            PageHelp pageHelp = new PageHelp();
+            List<Data> datas = new List<Data>();
+            int total = 0;
+            foreach (DirectoryInfo dir in subinfos)
+            {
+                if (statuDictionary.Keys.Contains(dir.Name))
+                {
+                    //本地文件存在状态列表 才加载
+                    DirectoryInfo[] companydirInfos = dir.GetDirectories();
+                    foreach (var companydir in companydirInfos)
+                    {
+                        Data data = new Data();
+                        data.FileResults = new List<Result>();
+                        data.currStatus = statuDictionary[dir.Name];
+                        data.stockAuditName = companydir.Name;
+                        foreach (FileInfo f in companydir.GetFiles())
+                        {
+                            //遍历文件名
+                            Result result = new Result();
+                            result.fileTitle = System.IO.Path.GetFileNameWithoutExtension(f.FullName);
+                            result.filePath = f.FullName;
+                            result.CompanyStatus = dir.Name;
+                            result.companyFullName = companydir.Name;
+                            results.Add(result);
+                            data.FileResults.Add(result);
+                            total++;
+                            //MessageBox.Show(result.localPath);
+                        }
+                        datas.Add(data);
+                    }
+                }
+            }
+            pageHelp.data = datas;
+            fileRoot = new RootObject();
+            companyRoot = new RootObject();
+            fileRoot.result = results;
+            fileRoot.pageHelp = new PageHelp(){total = total.ToString()};
+            companyRoot.pageHelp = pageHelp;
+            resultTemp = fileRoot.result.ToList();
+            localData = true;
+            comboBox2.SelectedIndex = 0;
+            button1.Enabled = false;
+            button2.Enabled = false;
+            label5.Text = "高级筛选支持正则表达式\n本地模式部分功能不可使用";
+            toolStripStatusLabel1.Text = "本地数据已加载";
+            this.Text = "科创板信息披露文件采集器(本地模式)";
+        }
+
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox abx = new AboutBox();
+            abx.Show();
         }
     }
 }

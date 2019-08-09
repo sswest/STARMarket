@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -22,6 +21,13 @@ namespace STARMakert.Forms
 
         private void Form_config_Load(object sender, EventArgs e)
         {
+            if (Form1.localData)
+            {
+                checkBox2.Enabled = false;
+                checkBox3.Enabled = false;
+                checkBox4.Enabled = false;
+                checkBox5.Enabled = false;
+            }
             textBox1.Text = Form1.localBasePath;
             textBox2.Text = Form1.fileLocatorPath;
             foreach (CheckBox control in this.groupBox2.Controls)

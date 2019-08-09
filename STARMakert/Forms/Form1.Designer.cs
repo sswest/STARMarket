@@ -47,6 +47,11 @@
             this.全文检索ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.什么也没有ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.加载本地数据ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.导出Excel表格ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button3 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -189,14 +194,14 @@
             // 全文检索ToolStripMenuItem
             // 
             this.全文检索ToolStripMenuItem.Name = "全文检索ToolStripMenuItem";
-            this.全文检索ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.全文检索ToolStripMenuItem.Text = "全文检索";
+            this.全文检索ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.全文检索ToolStripMenuItem.Text = "检索";
             this.全文检索ToolStripMenuItem.Click += new System.EventHandler(this.全文检索ToolStripMenuItem_Click);
             // 
             // 什么也没有ToolStripMenuItem
             // 
             this.什么也没有ToolStripMenuItem.Name = "什么也没有ToolStripMenuItem";
-            this.什么也没有ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.什么也没有ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.什么也没有ToolStripMenuItem.Text = "设置";
             this.什么也没有ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
@@ -204,12 +209,52 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.数据ToolStripMenuItem,
+            this.帮助ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(662, 25);
             this.menuStrip1.TabIndex = 4;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 数据ToolStripMenuItem
+            // 
+            this.数据ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.加载本地数据ToolStripMenuItem,
+            this.导出Excel表格ToolStripMenuItem});
+            this.数据ToolStripMenuItem.Name = "数据ToolStripMenuItem";
+            this.数据ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.数据ToolStripMenuItem.Text = "数据";
+            // 
+            // 加载本地数据ToolStripMenuItem
+            // 
+            this.加载本地数据ToolStripMenuItem.Name = "加载本地数据ToolStripMenuItem";
+            this.加载本地数据ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.加载本地数据ToolStripMenuItem.Text = "加载本地数据";
+            this.加载本地数据ToolStripMenuItem.Click += new System.EventHandler(this.加载本地数据ToolStripMenuItem_Click);
+            // 
+            // 导出Excel表格ToolStripMenuItem
+            // 
+            this.导出Excel表格ToolStripMenuItem.Enabled = false;
+            this.导出Excel表格ToolStripMenuItem.Name = "导出Excel表格ToolStripMenuItem";
+            this.导出Excel表格ToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.导出Excel表格ToolStripMenuItem.Text = "导出Excel表格";
+            // 
+            // 帮助ToolStripMenuItem
+            // 
+            this.帮助ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.关于ToolStripMenuItem});
+            this.帮助ToolStripMenuItem.Name = "帮助ToolStripMenuItem";
+            this.帮助ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
+            this.帮助ToolStripMenuItem.Text = "帮助";
+            // 
+            // 关于ToolStripMenuItem
+            // 
+            this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关于ToolStripMenuItem.Text = "关于";
+            this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // button3
             // 
@@ -245,7 +290,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(196, 40);
             this.label5.TabIndex = 14;
-            this.label5.Text = "高级筛选支持正则表达式\r\n可用筛选字段：\r\n见设置页";
+            this.label5.Text = "高级筛选支持正则表达式\r\n可用筛选字段见设置页";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
@@ -309,6 +354,11 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ToolStripMenuItem 全文检索ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 数据ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 加载本地数据ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 导出Excel表格ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 帮助ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
     }
 }
 

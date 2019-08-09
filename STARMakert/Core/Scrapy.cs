@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,6 +23,10 @@ namespace STARMakert.Core
             request.AddHeader("Referer", "http://kcb.sse.com.cn/disclosure/");
             request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
             var response = client.Execute(request);
+            if (response.StatusCode.ToString() == "0")
+            {
+                throw new Exception("0");
+            }
             rb = JsonConvert.DeserializeObject<RootObject>(response.Content);
             return rb;
 
@@ -34,6 +39,10 @@ namespace STARMakert.Core
             request.AddHeader("Referer", "http://kcb.sse.com.cn/renewal/");
             request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36");
             var response = client.Execute(request);
+            if (response.StatusCode.ToString()=="0")
+            {
+                throw new Exception("0");
+            }
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(response.Content);
             return rootObject;
         }
