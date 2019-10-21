@@ -64,6 +64,7 @@ namespace STARMakert
             //在初始化数据过程中会处理注册结果
             statuDictionary.Add("注册生效","5-1");
             statuDictionary.Add("不予注册", "5-2");
+            statuDictionary.Add("终止注册", "5-3");
             statuDictionary.Add("中止","7");
             statuDictionary.Add("终止","8");
             //statuDictionary.Add("未通过", "9");
