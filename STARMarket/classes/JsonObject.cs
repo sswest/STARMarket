@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using RestSharp;
 using RestSharp.Extensions;
 
-namespace STARMakert.Classes
+namespace STARMarket.Classes
 {
     public class ActionErrors
     {
@@ -66,6 +66,10 @@ namespace STARMakert.Classes
 
     public class Data
     {
+        public Data()
+        {
+            this.FileResults = new List<Result>();
+        }
         public string fileUpdateTime { get; set; }
         public string filePath { get; set; }
         public string publishDate { get; set; }

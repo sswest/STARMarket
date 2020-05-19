@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using STARMakert.Classes;
+using STARMarket.Classes;
 
-namespace STARMakert.Forms
+namespace STARMarket.Forms
 {
     public partial class Form_config : Form
     {
@@ -71,12 +71,12 @@ namespace STARMakert.Forms
             try
             {
                 RegistryKey key = Registry.CurrentUser.OpenSubKey("Software",true);
-                RegistryKey software = key.OpenSubKey("STARMakert", true);
+                RegistryKey software = key.OpenSubKey("STARMarket", true);
                 if (software == null)
                 {
-                    software = key.CreateSubKey("STARMakert");
+                    software = key.CreateSubKey("STARMarket");
                 }
-                //software = key.OpenSubKey("STARMakert", true);
+                //software = key.OpenSubKey("STARMarket", true);
                 Form1.localBasePath = textBox1.Text;
                 Form1.fileLocatorPath = textBox2.Text;
                 Result.localBasePath = textBox1.Text;

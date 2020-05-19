@@ -1,4 +1,4 @@
-﻿namespace STARMakert.Forms
+﻿namespace STARMarket.Forms
 {
     partial class Form_config
     {

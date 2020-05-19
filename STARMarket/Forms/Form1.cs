@@ -9,11 +9,11 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32;
-using STARMakert.Classes;
-using STARMakert.Core;
-using STARMakert.Forms;
+using STARMarket.Classes;
+using STARMarket.Core;
+using STARMarket.Forms;
 
-namespace STARMakert
+namespace STARMarket
 {
     public partial class Form1 : Form
     {
@@ -44,7 +44,7 @@ namespace STARMakert
         public void Init()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey("Software",true);
-            RegistryKey software = key.OpenSubKey("STARMakert", true);
+            RegistryKey software = key.OpenSubKey("STARMarket", true);
             try
             {
                 localBasePath = software.GetValue("localBasePath").ToString();
@@ -200,11 +200,11 @@ namespace STARMakert
                 var statu = statuDictionary.FirstOrDefault(q => q.Value == currStatus).Key;
                 res.CompanyStatus = statu;
                 res.CompanyData = companyData;
-                if (companyData.FileResults==null)
-                {
-                    //先要初始化列表
-                    companyData.FileResults = new List<Result>();
-                }
+                //if (companyData.FileResults == null)
+                //{
+                //    //先要初始化列表
+                //    companyData.FileResults = new List<Result>();
+                //}
                 companyData.FileResults.Add(res);
             }
             

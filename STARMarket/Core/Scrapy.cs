@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using RestSharp;
-using STARMakert.Classes;
+using STARMarket.Classes;
 
-namespace STARMakert.Core
+namespace STARMarket.Core
 {
     class Scrapy
     {

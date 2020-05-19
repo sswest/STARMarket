@@ -1,4 +1,4 @@
-﻿namespace STARMakert
+﻿namespace STARMarket
 {
     partial class Form1
     {

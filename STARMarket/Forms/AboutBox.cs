@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows.Forms;
 
-namespace STARMakert.Forms
+namespace STARMarket.Forms
 {
     public partial class AboutBox : Form
     {
